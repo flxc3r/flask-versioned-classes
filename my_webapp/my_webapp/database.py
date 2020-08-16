@@ -3,6 +3,10 @@
 from .compat import basestring
 from .extensions import db
 
+# versioned session
+from .history_meta import versioned_session
+versioned_session(db.session)
+
 # Alias common SQLAlchemy names
 Column = db.Column
 relationship = db.relationship
