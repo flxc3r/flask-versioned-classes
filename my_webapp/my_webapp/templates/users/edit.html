@@ -1,0 +1,18 @@
+
+{% extends "layout.html" %}
+{% block content %}
+<div class="container-narrow">
+  <h1 class="mt-5">Edit {{current_user.username}}</h1>
+    <br/>
+    <form id="editForm" class="form form-register" method="POST" action="" role="form">
+           {{ form.csrf_token }}
+            <div class="form-group">
+                {{form.email.label}}
+                {{form.email(placeholder="Email", class_="form-control", value=current_user.email)}}
+            </div>
+            
+            <p><input class="btn btn-primary" type="submit" value="Save"></p>
+    </form>
+</div>
+{% endblock %}
+
