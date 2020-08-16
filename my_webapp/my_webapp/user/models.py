@@ -12,6 +12,7 @@ from my_webapp.database import (
     relationship,
 )
 from my_webapp.extensions import bcrypt
+from my_webapp.history_meta import Versioned
 
 
 class Role(PkModel):
@@ -31,7 +32,7 @@ class Role(PkModel):
         return f"<Role({self.name})>"
 
 
-class User(UserMixin, PkModel):
+class User(Versioned, UserMixin, PkModel):
     """A user of the app."""
 
     __tablename__ = "users"
@@ -44,6 +45,11 @@ class User(UserMixin, PkModel):
     last_name = Column(db.String(30), nullable=True)
     active = Column(db.Boolean(), default=False)
     is_admin = Column(db.Boolean(), default=False)
+    version_created_at = Column(
+        db.DateTime, 
+        default=lambda context: context.get_current_parameters()['created_at'],
+        onupdate=dt.datetime.utcnow
+        )
 
     def __init__(self, username, email, password=None, **kwargs):
         """Create instance."""
