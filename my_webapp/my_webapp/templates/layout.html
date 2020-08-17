@@ -39,6 +39,7 @@
     <header>{% block header %}{% endblock %}</header>
 
     <main role="main">
+      <div class="container">
       {% with messages = get_flashed_messages(with_categories=true) %} {% if
       messages %}
       <div class="row">
@@ -56,7 +57,9 @@
         <!-- end col-md -->
       </div>
       <!-- end row -->
-      {% endif %} {% endwith %} {% block content %}{% endblock %}
+      {% endif %} {% endwith %}
+      </div> 
+      {% block content %}{% endblock %}
     </main>
 
     {% include "footer.html" %}
