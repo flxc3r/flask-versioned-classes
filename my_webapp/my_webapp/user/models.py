@@ -13,6 +13,7 @@ from my_webapp.database import (
 )
 from my_webapp.extensions import bcrypt
 from my_webapp.history_meta import Versioned
+from my_webapp.pricing_request.models import PricingRequest
 
 
 class Role(PkModel):
@@ -75,3 +76,13 @@ class User(Versioned, UserMixin, PkModel):
     def __repr__(self):
         """Represent instance as a unique string."""
         return f"<User({self.username!r})>"
+
+
+# Relationships
+
+User.pricing_requests_owned = db.relationship(
+    PricingRequest,
+    backref='owner', 
+    lazy=True, 
+    primaryjoin=lambda: PricingRequest.owner_id==User.id,
+    )
